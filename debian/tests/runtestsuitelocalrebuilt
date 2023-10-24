@@ -1,0 +1,16 @@
+#!/bin/sh
+# _prelude is so fragile that we will try to rebuilt
+set -e
+tmpdir=$(mktemp -d)
+trap 'rm -rf "$tmpdir"' EXIT INT TERM HUP
+
+cp -r test "$tmpdir"
+cp -r debian "$tmpdir"
+cp *.js "$tmpdir"
+cp -r bin "$tmpdir"
+
+cd $tmpdir
+rm -f _prelude.js || true
+# rebuild
+make -f debian/rules _prelude.js
+tap --no-cov test/*.js

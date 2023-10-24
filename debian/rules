@@ -1,4 +1,54 @@
 #!/usr/bin/make -f
+# -*- makefile -*-
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
 
 %:
 	dh $@
+
+# beware these option are fragile.
+COMPRESS_OPTION=-c unused=false,expression=true,passes=5
+
+# prerequiste for _prelude for testing
+# 1. should not end with a ;
+# 2. should be a one liner
+
+# use upstream
+_prelude.js: _prelude.mangle.js
+	uglifyjs $(COMPRESS_OPTION)  < $< | sed -e 's/;[[:space:]]*$$//g' -e '/^[[:space:]]*$$/d' | tr -d '\n' > $@
+
+# band aid in case of FTBFS
+#_prelude.js: _prelude.mangle.js
+#	cat $< > $@
+
+# minimal mangling for debugging, it should always work
+_prelude.mangle.js: prelude.js
+	uglifyjs -m < $<  | sed -e 's/;[[:space:]]*$$//g' -e '/^[[:space:]]*$$/d' | tr -d '\n' > $@
+
+override_dh_auto_build: _prelude.js
+
+override_dh_fixperms:
+	dh_fixperms
+	chmod a+x debian/node-browser-pack/usr/share/nodejs/browser-pack/bin/cmd.js
+
+example/output.js: _prelude.js example/input.json
+	./bin/cmd.js < example/input.json > example/output.js
+
+example/sourcemap/output.js: _prelude.js example/sourcemap/input.json
+	./bin/cmd.js < example/sourcemap/input.json > example/sourcemap/output.js
+
+
+override_dh_installexamples: example/output.js example/sourcemap/output.js
+	dh_installexamples
+
+override_dh_install:
+	dh_install
+	rm -f debian/node-browser-pack/usr/share/nodejs/browser-pack/bin/prepublish.js
+
+override_dh_auto_clean:
+	dh_auto_clean
+	rm -f _prelude.*
+	rm -f example/output.js
+	rm -f example/sourcemap/output.js
+	rm -rf node_modules

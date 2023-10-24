@@ -1,0 +1,13 @@
+Tests: runexamples
+Depends: node-browser-pack
+Restrictions: allow-stderr
+
+Tests: runtestsuitelocalrebuilt
+Depends: build-essential
+ , node-browser-pack
+ , node-concat-stream (>= 1.5.1)
+ , node-convert-source-map (>= 1.1.0)
+ , node-parse-base64vlq-mappings (>= 0.1.1)
+ , node-tap (>= 2.2.0)
+ , uglifyjs
+Restrictions: allow-stderr
