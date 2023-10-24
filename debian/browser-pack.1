@@ -1,0 +1,36 @@
+.Dd 8/4/17
+.Dt browser-pack 1
+.Sh NAME
+.Nm browser-pack
+.Nd pack Node.js source file information for browserify uses
+.Sh SYNOPSIS
+.Nm
+.Op Ar file
+.Sh DESCRIPTION
+.Nm 
+pack node-style source files from a json stream into a browser bundle.
+.Nm
+will input a json file and output a javascript file.
+.Nm
+will read by default STDIN.
+.Sh EXAMPLES
+.nf
+browser-pack <<EOF
+[
+  {
+    "id": "a1b5af78",
+    "source": "console.log(require('./foo')(5))",
+    "deps": { "./foo": "b8f69fa5" },
+    "entry": true
+  },
+  {
+    "id": "b8f69fa5",
+    "source": "module.exports = function (n) { return n * 111 }",
+    "deps": {}
+  }
+]
+EOF
+.fi
+.Sh SEE ALSO
+.Xr browserify 1 ,
+.Xr nodejs 1 ,

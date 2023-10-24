@@ -1,0 +1,11 @@
+version=4
+opts=\
+dversionmangle=s/@DEB_EXT@//,\
+repacksuffix=+ds,\
+filenamemangle=s%.*?(@ANY_VERSION@@ARCHIVE_EXT@)$%@PACKAGE@-$1% \
+ https://github.com/substack/browser-pack/tags (?:.*?/)?v?@ANY_VERSION@@ARCHIVE_EXT@$ group
+
+# It is not recommended use npmregistry. Please investigate more.
+# Take a look at https://wiki.debian.org/debian/watch/
+opts="searchmode=plain,component=types-browser-pack,ctype=nodejs,pgpmode=none,filenamemangle=s/^.*?(\d[\d\.-]*@ARCHIVE_EXT@)/node-types-browser-pack-$1/" \
+ https://registry.npmjs.org/@types/browser-pack https://registry.npmjs.org/@types/browser-pack/-/browser-pack-([\d\.]+)@ARCHIVE_EXT@ group

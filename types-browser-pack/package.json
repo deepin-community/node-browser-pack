@@ -1,0 +1,27 @@
+{
+    "name": "@types/browser-pack",
+    "version": "6.1.1",
+    "description": "TypeScript definitions for browser-pack",
+    "homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/browser-pack",
+    "license": "MIT",
+    "contributors": [
+        {
+            "name": "TeamworkGuy2",
+            "url": "https://github.com/TeamworkGuy2",
+            "githubUsername": "TeamworkGuy2"
+        }
+    ],
+    "main": "",
+    "types": "index.d.ts",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+        "directory": "types/browser-pack"
+    },
+    "scripts": {},
+    "dependencies": {
+        "@types/node": "*"
+    },
+    "typesPublisherContentHash": "98289f34356c497e6e59de9ecda3a531e6b5f590cb4ab26a5e0079f301c7f1da",
+    "typeScriptVersion": "3.6"
+}

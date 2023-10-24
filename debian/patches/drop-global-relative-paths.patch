@@ -1,0 +1,17 @@
+Description: replace ../../../usr by /usr in maps
+Author: Yadd <yadd@debian.org>
+Bug-Debian: https://bugs.debian.org/1029670
+Forwarded: not-needed
+Last-Update: 2023-01-26
+
+--- a/index.js
++++ b/index.js
+@@ -35,7 +35,7 @@
+     var basedir = defined(opts.basedir, process.cwd());
+     var prelude = opts.prelude || defaultPrelude;
+     var preludePath = opts.preludePath ||
+-        path.relative(basedir, defaultPreludePath).replace(/\\/g, '/');
++        path.relative(basedir, defaultPreludePath).replace(/\\/g, '/').replace(/^(\.\.\/)*usr\/share/, '/usr/share');
+     
+     var lineno = 1 + newlinesIn(prelude);
+     var sourcemap;
